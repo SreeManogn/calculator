@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: calculator
-        image: 22251a1257it258/calculator:kuberimg5
+        image: 22251a1257it258/calculator:kuberimg10
         ports:
         - containerPort: 5000
