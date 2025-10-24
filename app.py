@@ -1,25 +1,37 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
 def calculator():
-    result = None
-    if request.method == 'POST':
-        num1 = float(request.form['num1'])
-        num2 = float(request.form['num2'])
-        operation = request.form['operation']
+    if request.method == "POST":
+        try:
+            num1 = float(request.form.get("num1"))
+            num2 = float(request.form.get("num2"))
+            operation = request.form.get("operation")
 
-        if operation == 'add':
-            result = num1 + num2
-        elif operation == 'subtract':
-            result = num1 - num2
-        elif operation == 'multiply':
-            result = num1 * num2
-        elif operation == 'divide':
-            result = "Error! Division by zero." if num2 == 0 else num1 / num2
+            if operation == "add":
+                result = num1 + num2
+            elif operation == "subtract":
+                result = num1 - num2
+            elif operation == "multiply":
+                result = num1 * num2
+            elif operation == "divide":
+                result = num1 / num2
+            else:
+                result = "Invalid operation"
 
-    return render_template('calculator.html', result=result)
+            # Redirect to result page with result as a query parameter
+            return redirect(url_for("result_page", result=result))
+        except:
+            return redirect(url_for("result_page", result="Error! Invalid input."))
+    
+    return render_template("index.html")
 
-if __name__ == '__main__':
+@app.route("/result")
+def result_page():
+    result = request.args.get("result")
+    return render_template("result.html", result=result)
+
+if __name__ == "__main__":
     app.run(debug=True)
