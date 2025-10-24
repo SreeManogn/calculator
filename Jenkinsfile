@@ -19,8 +19,8 @@ pipeline {
 
         stage('Push Docker Image to Docker Hub') {
             steps {
-               bat 'docker tag calculator:v1 22251a1257it258/calculator:kuberimg10' 
-               bat 'docker push 22251a1257it258/calculator:kuberimg10'
+               bat 'docker tag calculator:v1 22251a1257it258/calculator:kuberimg5' 
+               bat 'docker push 22251a1257it258/calculator:kuberimg5'
             }
         }
 
